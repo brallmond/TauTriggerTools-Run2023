@@ -19,7 +19,7 @@
 #include <DataFormats/PatCandidates/interface/GenericParticle.h>
 #include <DataFormats/PatCandidates/interface/PackedGenParticle.h>
 #include <DataFormats/HepMCCandidate/interface/GenStatusFlags.h>
-#include "TauTagAndProbe/TauTagAndProbe/interface/GenHelper.h"
+#include "TauTriggerTools/TauTagAndProbe/interface/GenHelper.h"
 
 #include <vector>
 

@@ -8,7 +8,7 @@
 */
 
 #include <iostream>
-#include "TauTagAndProbe/TauTagAndProbe/interface/GenHelper.h"
+#include "TauTriggerTools/TauTagAndProbe/interface/GenHelper.h"
 #include <DataFormats/Candidate/interface/Candidate.h>
 #include <DataFormats/HepMCCandidate/interface/GenStatusFlags.h>
 #include "DataFormats/TauReco/interface/PFTauDecayMode.h"

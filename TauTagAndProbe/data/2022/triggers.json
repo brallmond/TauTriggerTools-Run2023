@@ -122,30 +122,11 @@
     },
     "HLT_IsoMu24_eta2p1_MediumDeepTauPFTauHPS35_L2NN_eta2p1_CrossL1_v": {
         "filters": [
-            ["hltL3crIsoL1sBigOrMuXXerIsoTauYYerL1f0L2f10QL3f24QL3trkIsoFiltered","hltHpsOverlapFilterIsoMu24MediumDitauWPDeepTauPFTau35Monitoring"],
-            ["hltHpsSelectedPFTau35MediumDitauWPDeepTauL1HLTBigOrMuXXerIsoTauYYerMatched", "hltHpsOverlapFilterIsoMu24MediumDitauWPDeepTauPFTau35Monitoring" ]
+	    ["hltL3crIsoL1sBigOrMuXXerIsoTauYYerL1f0L2f10QL3f24QL3trkIsoFiltered","hltHpsOverlapFilterIsoMu24MediumDitauWPDeepTauPFTau35Monitoring"],
+            [ "hltHpsSelectedPFTau35MediumDitauWPDeepTauL1HLTBigOrMuXXerIsoTauYYerMatched", "hltHpsOverlapFilterIsoMu24MediumDitauWPDeepTauPFTau35Monitoring" ]
         ],
         "leg_types": [ "mu", "tau" ],
         "target_channels": [ "ditau" ],
-        "sample_types": [ "data", "mc" ]
-    },
-    "HLT_IsoMu24_eta2p1_MediumDeepTauPFTauHPS30_L2NN_eta2p1_CrossL1_v": {
-        "filters": [
-            ["hltL3crIsoL1sVeryBigOrMu18erTauXXerL1f0L2f10QL3f24QL3trkIsoFiltered","hltHpsOverlapFilterIsoMu24MediumDitauWPDeepTauPFTau30Monitoring"],
-            ["hltHpsSelectedPFTau30MediumDitauWPDeepTauL1HLTVeryBigOrMu18erTauXXerMatched", "hltHpsOverlapFilterIsoMu24MediumDitauWPDeepTauPFTau30Monitoring" ]
-        ],
-        "leg_types": [ "mu", "tau" ],
-        "target_channels": [ "ditaujet_tauleg", "ditaujet_jetleg" ],
-        "sample_types": [ "data", "mc" ]
-    },
-    "HLT_IsoMu24_eta2p1_MediumDeepTauPFTauHPS30_L2NN_eta2p1_PFJet60_CrossL1_v": {
-        "filters": [
-            ["hltL3crIsoL1sVeryBigOrMu18erTauXXerL1f0L2f10QL3f24QL3trkIsoFiltered","hltHpsOverlapFilterDeepTauPFTau30VeryBigOrMu18erTauXXPFJet60"],
-            ["hltHpsSelectedPFTau30MediumDitauWPDeepTauL1HLTVeryBigOrMu18erTauXXerMatched", "hltHpsOverlapFilterDeepTauPFTau30VeryBigOrMu18erTauXXPFJet60"],
-            ["hlt1PFJet60L1HLTMatched", "hltHpsOverlapFilterDeepTauPFTau30VeryBigOrMu18erTauXXPFJet60"]
-        ],
-        "leg_types": [ "mu", "tau", "jet" ],
-        "target_channels": [ "ditaujet_jetleg" ],
         "sample_types": [ "data", "mc" ]
     },
     "HLT_IsoMu24_eta2p1_TightChargedIsoPFTauHPS35_Trk1_eta2p1_Reg_CrossL1_v": {

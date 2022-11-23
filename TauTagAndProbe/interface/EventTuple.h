@@ -59,8 +59,6 @@ This file is part of https://github.com/cms-tau-pog/TauTriggerTools. */
     VAR(Float_t, tau_ip3d_error) /* uncertainty of the 3D impact parameter measurement */ \
     VAR(Float_t, tau_dz) /* tau dz of the leadChargedHadrCand wrt to the primary vertex */ \
     VAR(Float_t, tau_dz_error) /* uncertainty of the tau dz measurement */ \
-    /* jet variables */ \
-    VAR4(Float_t, jet_pt, jet_eta, jet_phi, jet_mass) /* 4-momentum of the muon */ \
     /* mu-tau variables */ \
     VAR(Float_t, vis_mass) /* visible mu-tau mass */ \
     /* HLT results and objects */ \

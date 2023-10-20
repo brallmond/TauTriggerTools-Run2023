@@ -41,7 +41,7 @@ def CreateHistograms(input_file, selection_id, hlt_paths, vars, output_file,ch):
         df = df.Filter('(tau_sel & {}) != 0  && muon_pt > 27 && muon_iso < 0.1 && muon_mt < 30 && tau_decayMode != 5 && tau_decayMode != 6 && abs(tau_eta) < 2.3 && tau_pt > 20 && vis_mass > 40 && vis_mass < 80'.format(selection_id))
     elif ch == "single_tau":
         #df = df.Filter('(tau_sel & {}) != 0  && muon_pt > 27 && muon_iso < 0.1 && muon_mt < 30 && tau_decayMode != 5 && tau_decayMode != 6 && abs(tau_eta) < 2.3 && tau_pt > 20 && vis_mass > 40 && vis_mass < 80'.format(selection_id))
-        df = df.Filter('(tau_sel & {}) != 0'.format(selection_id))
+        df = df.Filter('(tau_sel & {}) != 0  && muon_pt > 27 && muon_iso < 0.1 && muon_mt < 30 && tau_decayMode != 5 && tau_decayMode != 6 && abs(tau_eta) < 2.3 && tau_pt > 20'.format(selection_id))
     elif ch == "ditaujet":
         df = df.Filter('(tau_sel & {}) != 0 && muon_pt > 27 && muon_iso < 0.1 && muon_mt < 30 && tau_decayMode != 5 && tau_decayMode != 6 && abs(tau_eta) < 2.3 && tau_pt > 20 && vis_mass > 40 && vis_mass < 80'.format(selection_id))
     elif ch == "VBFditau_lo":
@@ -90,7 +90,7 @@ def CreateMCHistograms(input_file, selection_id, hlt_paths, vars, output_file,ch
         df = df.Filter('(tau_sel & {}) != 0  && muon_pt > 27 && muon_iso < 0.1 && muon_mt < 30 && tau_decayMode != 5 && tau_decayMode != 6 && abs(tau_eta) < 2.3 && tau_pt > 20 && vis_mass > 40 && vis_mass < 80'.format(selection_id))
     elif ch == "single_tau":
         #df = df.Filter('(tau_sel & {}) != 0  && muon_pt > 27 && muon_iso < 0.1 && muon_mt < 30 && tau_decayMode != 5 && tau_decayMode != 6 && abs(tau_eta) < 2.3 && tau_pt > 20 && vis_mass > 40 && vis_mass < 80'.format(selection_id))
-        df = df.Filter('(tau_sel & {}) != 0'.format(selection_id))
+        df = df.Filter('(tau_sel & {}) != 0 && muon_pt > 27 && muon_iso < 0.1 && muon_mt < 30 && tau_decayMode != 5 && tau_decayMode != 6 && abs(tau_eta) < 2.3 && tau_pt > 20'.format(selection_id))
     elif ch == "ditaujet":
         df = df.Filter('(tau_sel & {}) != 0 && muon_pt > 27 && muon_iso < 0.1 && muon_mt < 30 && tau_decayMode != 5 && tau_decayMode != 6 && abs(tau_eta) < 2.3 && tau_pt > 20 && vis_mass > 40 && vis_mass < 80'.format(selection_id))
     elif ch == "VBFditau_lo":

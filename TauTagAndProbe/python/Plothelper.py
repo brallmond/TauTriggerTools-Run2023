@@ -32,6 +32,60 @@ def CreateBins(var_name,singleTau=False):
         return np.linspace(0, 80, 6), False, False
     raise RuntimeError("Can't find binning for \"{}\"".format(var_name))
 
+
+def CreateL1Histograms(input_file, selection_id, hlt_paths, vars, output_file,ch):
+    df = ROOT.RDataFrame('events',input_file)
+    eta_th = {"ditau":45,"mutau":30,"etau":30,"single_tau":180,"ditaujet":45,"VBFditau_lo":30,"VBFditau_hi":47}
+    if ch == "VBFditau_lo":
+        df = df.Filter('(tau_sel & {}) != 0  && muon_pt > 27 && muon_iso < 0.1 && muon_mt < 30 && tau_decayMode != 5 && tau_decayMode != 6 && abs(tau_eta) < 2.3 && tau_pt > 5 && vis_mass > 40 && vis_mass < 80'.format(selection_id))
+    elif ch == "etau":
+        df = df.Filter('(tau_sel & {}) != 0  && muon_pt > 27 && muon_iso < 0.1 && muon_mt < 30 && tau_decayMode != 5 && tau_decayMode != 6 && abs(tau_eta) < 2.3 && tau_pt > 20 && vis_mass > 40 && vis_mass < 80'.format(selection_id))
+    elif ch == "single_tau":
+        #df = df.Filter('(tau_sel & {}) != 0  && muon_pt > 27 && muon_iso < 0.1 && muon_mt < 30 && tau_decayMode != 5 && tau_decayMode != 6 && abs(tau_eta) < 2.3 && tau_pt > 20 && vis_mass > 40 && vis_mass < 80'.format(selection_id))
+        df = df.Filter('(tau_sel & {}) != 0  && muon_pt > 27 && muon_iso < 0.1 && muon_mt < 30 && tau_decayMode != 5 && tau_decayMode != 6 && abs(tau_eta) < 2.3 && tau_pt > 20'.format(selection_id))
+    elif ch == "ditaujet":
+        df = df.Filter('(tau_sel & {}) != 0 && muon_pt > 27 && muon_iso < 0.1 && muon_mt < 30 && tau_decayMode != 5 && tau_decayMode != 6 && abs(tau_eta) < 2.3 && tau_pt > 20 && vis_mass > 40 && vis_mass < 80'.format(selection_id))
+    elif ch == "VBFditau_lo":
+        df = df.Filter('(tau_sel & {}) != 0  && muon_pt > 27 && muon_iso < 0.1 && muon_mt < 30 && tau_decayMode != 5 && tau_decayMode != 6 && abs(tau_eta) < 2.3 && tau_pt > 20 && vis_mass > 40 && vis_mass < 80'.format(selection_id))
+    elif ch == "VBFditau_hi":
+        df = df.Filter('(tau_sel & {}) != 0  && muon_pt > 27 && muon_iso < 0.1 && muon_mt < 30 && tau_decayMode != 5 && tau_decayMode != 6 && abs(tau_eta) < 2.3 && tau_pt > 20 && vis_mass > 40 && vis_mass < 80'.format(selection_id))
+    else:
+        df = df.Filter('(tau_sel & {}) != 0  && muon_pt > 27 && muon_iso < 0.1 && muon_mt < 30 && tau_decayMode != 5 && tau_decayMode != 6 && abs(tau_eta) < 2.3 && tau_pt > 20 && vis_mass > 40 && vis_mass < 80'.format(selection_id))
+        #print("In Data after preselection ",df.Histo1D(hist_model,var).GetEntries())
+    
+    
+    df = df.Filter('(byDeepTau2017v2p1VSmu & (1 << 5)) != 0 && (byDeepTau2017v2p1VSjet & (1 << 4)) != 0')
+
+    hist_total_L1,hist_pass_L1,eff_L1 = dict(),dict(),dict()
+    bool_singletau = False
+    if ch == "single_tau":
+        bool_singletau =True
+    for var in vars:
+        bins, x_scales, divide_by_bw = CreateBins(var,bool_singletau)
+        hist_model = ROOT.RDF.TH1DModel(var, var, len(bins) - 1, array('d', bins))
+        if var == 'tau_eta' or var == 'npv' or var == 'tau_phi':
+            df = df.Filter('tau_pt > {}'.format(eta_th[ch]))
+    
+        hist_total_L1[var] = df.Histo1D(hist_model,var)
+        if ch == 'mutau':
+            hist_pass_L1[var] = df.Filter('l1Tau_pt >= 26').Histo1D(hist_model, var)
+        elif ch == 'etau': 
+            hist_pass_L1[var] = df.Filter('l1Tau_pt >= 26 && l1Tau_hwIso > 0.').Histo1D(hist_model, var)
+        elif ch == 'ditau':
+            hist_pass_L1[var] = df.Filter('l1Tau_pt >= 32 && l1Tau_hwIso > 0.').Histo1D(hist_model, var)
+        elif ch == 'VBFditau_hi':
+            hist_pass_L1[var]  = df.Filter('l1Tau_pt >= 45 && l1Tau_hwIso > 0').Histo1D(hist_model, var)
+        elif ch == 'ditaujet':
+            hist_pass_L1[var]  = df.Filter('l1Tau_hwIso > 0 && l1Tau_pt >= 26').Histo1D(hist_model, var)# && l1Tau_hwIso > 0
+        elif ch == 'single_tau':
+            hist_pass_L1[var] = df.Filter('l1Tau_pt >= 130').Histo1D(hist_model, var)
+        else:
+            hist_pass_L1[var]  = df.Filter('l1Tau_pt >= 100').Histo1D(hist_model, var)
+
+        eff_L1[var] = ROOT.TEfficiency(hist_pass_L1[var].GetPtr(), hist_total_L1[var].GetPtr())
+        print("L1: ",hist_pass_L1[var].GetPtr().GetEntries())
+    return hist_pass_L1,hist_total_L1,eff_L1
+
 def CreateHistograms(input_file, selection_id, hlt_paths, vars, output_file,ch):
     df = ROOT.RDataFrame('events',input_file)
     eta_th = {"ditau":45,"mutau":30,"etau":30,"single_tau":180,"ditaujet":45,"VBFditau_lo":30,"VBFditau_hi":47}
@@ -78,7 +132,7 @@ def CreateHistograms(input_file, selection_id, hlt_paths, vars, output_file,ch):
                     .Histo1D(hist_model, var)
 
         eff[var] = ROOT.TEfficiency(hist_pass[var].GetPtr(), hist_total[var].GetPtr())
-        print(hist_total[var].GetPtr().GetEntries())
+        print(hist_pass[var].GetPtr().GetEntries())
     return hist_pass,hist_total,eff
         
 def CreateMCHistograms(input_file, selection_id, hlt_paths, vars, output_file,ch,pu):

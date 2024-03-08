@@ -1,0 +1,4 @@
+lumiMask=/afs/cern.ch/work/v/vmuralee/public/GoldenJson/2022/Cert_Collisions2022_eraF_360390_360491_Golden.json globalTag=124X_dataRun3_HLT_Pixel_w37_2022_v2
+period=Run2022 isMC=False runDeepTau=True
+
+Muon_Run2022F	/Muon/Run2022F-PromptReco-v1/MINIAOD

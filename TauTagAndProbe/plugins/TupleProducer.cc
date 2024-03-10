@@ -29,6 +29,7 @@ This file is part of https://github.com/cms-tau-pog/TauTriggerTools. */
 #include "TauTriggerTools/Common/interface/PatHelpers.h"
 #include "TauTriggerTools/Common/interface/TriggerDescriptor.h"
 #include "TauTriggerTools/TauTagAndProbe/interface/EventTuple.h"
+#include "TauTriggerTools/TauTagAndProbe/interface/SummaryTuple.h"
 
 namespace tau_trigger {
 
@@ -307,6 +308,12 @@ private:
                 eventTuple().hltObj_isBestMatch.push_back(match_entry.second.isBestMatch.to_ullong());
                 eventTuple().hltObj_hasFilters_1.push_back(match_entry.second.getHasFilters(0).to_ullong());
                 eventTuple().hltObj_hasFilters_2.push_back(match_entry.second.getHasFilters(1).to_ullong());
+		const size_t hltObj_index = eventTuple().hltObj_pt.size() - 1;
+                for(const std::string& filter : match_entry.second.filters) {
+		  eventTuple().filter_hltObj.push_back(hltObj_index);
+		  const uint32_t hash = SummaryProducerData::GetData().getFilterHash(filter);
+		  eventTuple().filter_hash.push_back(hash);
+                }
             }
 
             auto l1Tau = MatchL1Taus(tau_ref_p4, *l1Taus, deltaR2Thr, 0);

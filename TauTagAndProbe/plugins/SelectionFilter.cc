@@ -4,7 +4,8 @@ This file is part of https://github.com/cms-tau-pog/TauTriggerTools. */
 #include "CommonTools/UtilAlgos/interface/TFileService.h"
 
 #include "FWCore/Common/interface/TriggerNames.h"
-#include "FWCore/Framework/interface/EDFilter.h"
+#include "FWCore/Framework/interface/stream/EDFilter.h"
+//#include "FWCore/Framework/interface/stream/EDProducer.h"
 #include "FWCore/Framework/interface/Event.h"
 #include "FWCore/Framework/interface/EventSetup.h"
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
@@ -22,7 +23,8 @@ This file is part of https://github.com/cms-tau-pog/TauTriggerTools. */
 
 namespace tau_trigger {
 
-class SelectionFilter : public edm::EDFilter {
+  class SelectionFilter : public edm::stream::EDFilter<> {
+  //class SelectionFilter : public edm::stream::EDProducer<>{
 public:
     using SelectionHist = root_ext::SmartHistogram<cuts::ObjectSelector>;
     using Cutter = cuts::Cutter<>;
@@ -65,7 +67,7 @@ private:
         return result;
     }
 
-    virtual void endJob() override
+    virtual void endJob() //override
     {
         TFile& file = edm::Service<TFileService>()->file();
         selection.SetOutputDirectory(&file);

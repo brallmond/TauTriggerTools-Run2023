@@ -44,7 +44,7 @@ struct TriggerObjectMatchResult {
     TriggerResults hasPathName, isBestMatch;
     std::map<size_t, TriggerResults> hasFilters;
     std::set<size_t> descIndices;
-
+    std::vector<std::string> filters;
     TriggerResults getHasFilters(size_t index) const;
 };
 

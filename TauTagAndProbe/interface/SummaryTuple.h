@@ -91,6 +91,7 @@ INITIALIZE_TREE(tau_trigger, ExpressTuple, EVENT_EXPRESS_DATA)
 
     uint32_t getFilterHash(const std::string& filterName)
     {
+      std::cout<<filterName<<std::endl;
       LockGuard lock(getMutex());
       auto iter = filterNameToHash.find(filterName);
       if(iter == filterNameToHash.end()) {

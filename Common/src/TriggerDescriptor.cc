@@ -115,6 +115,7 @@ FullTriggerResults TriggerDescriptorCollection::matchTriggerObjects(
             match_result.objType = obj_types.at(obj_index);
             match_result.hasPathName.set(desc_index);
             match_result.descIndices.insert(desc_index);
+	    match_result.filters = hlt_obj.filterLabels();
             for(size_t leg_index = 0; leg_index < trig_desc.legs.size(); ++leg_index) {
                 const auto& leg = trig_desc.legs.at(leg_index);
                 if((obj_types.at(obj_index) & static_cast<unsigned>(leg.type)) == 0) continue;

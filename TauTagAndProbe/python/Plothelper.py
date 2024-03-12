@@ -30,6 +30,8 @@ def CreateBins(var_name,singleTau=False):
         return np.linspace(-2.3, 2.3, 7), False, False
     elif var_name in [ 'npu', 'npv' ]:
         return np.linspace(0, 80, 6), False, False
+    elif var_name in [ 'tau_phi' ]:
+        return np.linspace(-3.2, 3.2, 17), False, False
     raise RuntimeError("Can't find binning for \"{}\"".format(var_name))
 
 
@@ -135,7 +137,7 @@ def CreateHistograms(input_file, selection_id, hlt_paths, vars, output_file,ch):
         print(hist_pass[var].GetPtr().GetEntries())
     return hist_pass,hist_total,eff
         
-def CreateMCHistograms(input_file, selection_id, hlt_paths, vars, output_file,ch,pu):
+def CreateMCHistograms(input_file, selection_id, hlt_paths, vars, output_file,ch,pu=False):
     df = ROOT.RDataFrame('events',input_file)
     eta_th = {"ditau":45,"mutau":30,"etau":30,"single_tau":180,"ditaujet":45,"VBFditau_lo":30,"VBFditau_hi":47}
     if ch == "VBFditau_lo":
@@ -158,7 +160,10 @@ def CreateMCHistograms(input_file, selection_id, hlt_paths, vars, output_file,ch
     
     df = df.Filter('(byDeepTau2017v2p1VSmu & (1 << 5)) != 0 && (byDeepTau2017v2p1VSjet & (1 << 4)) != 0')
     df = df.Filter('tau_charge + muon_charge == 0 && tau_gen_match == 5')
-    df = df.Define('weight', "PileUpWeightProvider::GetDefault().GetWeight(npu) * genEventWeight")
+    if (pu == True):
+      df = df.Define('weight', "PileUpWeightProvider::GetDefault().GetWeight(npu) * genEventWeight")
+    else:
+      df = df.Define('weight', "genEventWeight")
     hist_total,hist_pass,eff = dict(),dict(),dict()
     bool_singletau = False
     if ch == "single_tau":

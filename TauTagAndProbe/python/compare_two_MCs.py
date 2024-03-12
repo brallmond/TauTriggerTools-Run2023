@@ -125,10 +125,16 @@ for var in args.vars:
     elif(var== "npu" or var == "npv"):
         label.SetTextSize(0.0414815);label.DrawLatex(0.197995,0.0122888, "number of offline reconstructed primary vertices")
         label.SetTextSize(0.040); label.DrawLatex(0.100, 0.920, "#bf{CMS} #it{Preliminary}")
-    else:
+    elif(var== "tau_eta"):
         label.SetTextSize(0.0414815);label.DrawLatex(0.67,0.0192593, "Offline #eta^{#tau}")
         label.SetTextSize(0.040); label.DrawLatex(0.100, 0.920, "#bf{CMS} #it{Preliminary}")
         #label.SetTextSize(0.030); label.DrawLatex(0.63, 0.912593, "34.3 fb^{-1} (13.6 TeV, 2022)")
+    elif(var== "tau_phi"):
+        label.SetTextSize(0.0414815);label.DrawLatex(0.67,0.0192593, "Offline #phi^{#tau}")
+        label.SetTextSize(0.040); label.DrawLatex(0.100, 0.920, "#bf{CMS} #it{Preliminary}")
+        #label.SetTextSize(0.030); label.DrawLatex(0.63, 0.912593, "34.3 fb^{-1} (13.6 TeV, 2022)")
+    else:
+        print("variable doesn't exist")
         
     if args.channel == 'ditau':
         label.DrawLatex(0.358396,0.434074, "#bf{Double-#tau_{h} trigger performance}")
